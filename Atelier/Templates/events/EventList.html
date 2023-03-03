@@ -16,11 +16,13 @@
               <h5 class="card-title">{{e.title}}</h5>
         
               <p class="card-text">{{e.description}}</p>
-        
+              
               <a href="{% url 'event_details' e.id %}" class="btn btn-primary"
                 >View Details</a
               >
-             
+              <a href="{% url 'update_events_view' e.id %}" class="btn btn-success"
+              >Update Event</a
+            >
               <p class="card-text mt-2">Category : {{e.category}}</p>
             </div>
             <div class="card-footer">

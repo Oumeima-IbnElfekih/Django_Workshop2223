@@ -1,5 +1,6 @@
 from django import forms
 from users.models import Person
+from .models import Event
 CHOIX =(
         ('Musique','Musique'),
         ('Cinema','Cinema'),
@@ -15,6 +16,23 @@ class EventForm(forms.Form):
     category =forms.ChoiceField(label="category" , choices=CHOIX,
                                 widget=forms.RadioSelect())
     nbe_participant = forms.IntegerField(min_value=0)
+    evt_date =forms.DateField(
+        label="Event Date",
+        widget=forms.DateInput(attrs={
+            'type' : 'date',
+            'class' :'form-control date-input'
+        })
+    )
+    organizer =forms.ModelChoiceField(label="Organizer",queryset=Person.objects.all())
+    
+
+class EventModelForm(forms.ModelForm):
+    class Meta:
+        model =Event
+        # fields='__all__'
+        fields=['title','description','image','category',
+                'nbe_participant','evt_date','organizer']
+        # exclude=('state')
     evt_date =forms.DateField(
         label="Event Date",
         widget=forms.DateInput(attrs={
