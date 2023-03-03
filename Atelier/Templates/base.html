@@ -11,13 +11,22 @@
     <title>Hello, Django!</title>
   </head>
   <body>
-    {% include 'header.html' %}
-    <div class="container">
-         {% block content %}{% endblock  %}
-
-
-
+    <main>
+      {% include "header.html"  %}  
+    <div class="container py-4">
+      <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-5">
+          <h1 class="display-5 fw-bold">Upcomming Events</h1>
+          <p class="col-md-8 fs-4">Get ready to experience something new! Check out our upcoming events!</p>
+         
+        </div>
+      </div>
+        
+        {% block content %}{% endblock content %}
+        {% include "footer.html"  %}
     </div>
+   
+</main>
      
 
 
