@@ -2,7 +2,7 @@ from django.shortcuts import render ,redirect
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from .models import Event
-from django.views.generic import ListView,DetailView,CreateView,UpdateView
+from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -65,8 +65,15 @@ class CreateEvent(LoginRequiredMixin,CreateView):
     form_class=EventModelForm
     success_url= reverse_lazy('list_events_view')
     
-class UpdateEvent(UpdateView):
+class UpdateEvent(LoginRequiredMixin,UpdateView):
     model=Event
     template_name="events/event_form.html"
     form_class=EventModelForm
     success_url= reverse_lazy('list_events_view')
+    
+
+
+class DeleteEventView(LoginRequiredMixin,DeleteView):
+    model=Event
+    success_url =reverse_lazy('list_events_view')
+    

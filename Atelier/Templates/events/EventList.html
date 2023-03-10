@@ -23,6 +23,9 @@
               <a href="{% url 'update_events_view' e.id %}" class="btn btn-success"
               >Update Event</a
             >
+            <a href="{% url 'delete_event_view' e.id %}" class="btn btn-danger"
+              >Delete Event</a
+            >
               <p class="card-text mt-2">Category : {{e.category}}</p>
             </div>
             <div class="card-footer">
