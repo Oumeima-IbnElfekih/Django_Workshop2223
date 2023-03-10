@@ -1,7 +1,8 @@
 from django.shortcuts import render ,redirect
 from django.urls import reverse_lazy
 from django.http import HttpResponse
-from .models import Event
+from .models import Event,Participation
+from datetime import date
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from .forms import *
 from django.contrib.auth.decorators import login_required
@@ -44,6 +45,20 @@ def create_event(req):
         
 #Views Class Based
 
+
+def participate(req,event_id):
+    event=Event.objects.get(id=event_id)
+    user=req.user
+    if Participation.objects.filter(Person=user,event=event).count() ==0:
+        event.nbe_participant+=1
+        event.save()
+        part=Participation.objects.create(Person=user,event=event,
+                                          date_participation=date.today)
+        part.save()
+        return redirect('list_events_view')
+    else:
+        return redirect('list_events_view')
+    
 class ListEventView(LoginRequiredMixin,ListView):
     login_url="login"
     model =Event
@@ -64,6 +79,9 @@ class CreateEvent(LoginRequiredMixin,CreateView):
     template_name="events/event_form.html"
     form_class=EventModelForm
     success_url= reverse_lazy('list_events_view')
+    def form_valid(self, form):
+        form.instance.organizer = Person.objects.get(cin=self.request.user.cin)
+        return super().form_valid(form)
     
 class UpdateEvent(LoginRequiredMixin,UpdateView):
     model=Event
