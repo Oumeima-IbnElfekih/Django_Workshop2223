@@ -2,7 +2,7 @@
 
 
   {% load static %}
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #E8E8E8;">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color:grey;">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
             <img
@@ -39,8 +39,14 @@
                 </li>
             </ul>
             <span class="navbar-text">
-                
-            </span>
+                {{ Greeting }} {{ user.username|default:"Visitor" }}
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="link-light"> <i class="bi bi-person-dash"></i> Log Out</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="link-info"><i class="bi bi-box-arrow-in-right"></i> Log In</a>
+                <a href="" class="link-light"><i class="bi bi-person-add"></i> Sign Up</a>
+                {% endif %}
+                </span>
         </div>
     </div>
 </nav>

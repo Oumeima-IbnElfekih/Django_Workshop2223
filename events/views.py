@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from .models import Event
 from django.views.generic import ListView,DetailView,CreateView,UpdateView
 from .forms import *
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 #Views funtion based
 def HomePage(request):
@@ -26,7 +28,7 @@ def add_event(req):
             print(form.errors)
     return render(req, "events/event_form.html",{'form':form})      
 
-
+@login_required
 def create_event(req):
     if req.method =="GET":
         form =EventModelForm()
@@ -42,19 +44,22 @@ def create_event(req):
         
 #Views Class Based
 
-class ListEventView(ListView):
+class ListEventView(LoginRequiredMixin,ListView):
+    login_url="login"
     model =Event
     template_name ="events/EventList.html"
     context_object_name ="events"
     # def get_queryset(self):
     #     return Event.objects.filter(state=True)
 
-class DetailEventView(DetailView):
+class DetailEventView(LoginRequiredMixin,DetailView):
+    login_url="login"
     model=Event
     template_name ="events/DetailsEvent.html"
     context_object_name ="event"
     
-class CreateEvent(CreateView):
+class CreateEvent(LoginRequiredMixin,CreateView):
+    login_url="login"
     model=Event
     template_name="events/event_form.html"
     form_class=EventModelForm

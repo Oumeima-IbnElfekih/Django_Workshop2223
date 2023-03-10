@@ -7,12 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
-
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+/>
     <title>Hello, Django!</title>
   </head>
   <body>
     <main>
-      {% include "header.html"  %}  
+      {% include "header.html"  with Greeting="Hello" %}  
     <div class="container py-4">
       <div class="p-5 mb-4 bg-light rounded-3">
         <div class="container-fluid py-5">
