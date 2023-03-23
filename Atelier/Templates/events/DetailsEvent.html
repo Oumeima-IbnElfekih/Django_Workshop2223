@@ -12,7 +12,8 @@
       <p>{{event.category}}</p>
       <a href="{% url 'participate' event.id %}" class="btn btn-outline-secondary" >
         Participate</a>
-      <a href="" class="btn btn-danger"  > Cancel Participation </a>
+        <a class="btn btn-outline-danger" href="{% url 'cancel' event.id %}">Cancel Participation</a>
+  
     </div>
   </div>
 </div>

@@ -45,7 +45,7 @@ def create_event(req):
         
 #Views Class Based
 
-
+@login_required(login_url="login")
 def participate(req,event_id):
     event=Event.objects.get(id=event_id)
     user=req.user
@@ -58,6 +58,21 @@ def participate(req,event_id):
         return redirect('list_events_view')
     else:
         return redirect('list_events_view')
+
+
+@login_required(login_url="login")    
+def cancel(request, event_id):
+    user = request.user
+    event = Event.objects.filter(id=event_id).first()
+    if  Participation.objects.filter(Person=user,event=event).count() != 0:
+        participant = Participation.objects.filter(Person=user, event=event).first()
+        participant.delete()
+        event.nbe_participant -= 1
+        event.save()
+        return redirect('list_events_view')
+    else:
+        return redirect('list_events_view')
+    #changer la logique métier si vous voulez
     
 class ListEventView(LoginRequiredMixin,ListView):
     login_url="login"
